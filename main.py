@@ -6,24 +6,13 @@ WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 WHITE = (255, 255, 255)
 
-# board = [[(255, 255, 255) for i in range(WIDTH)] for i in range(HEIGHT)]
-
-
-def draw(win: pygame.Surface):
-    # win.fill(WHITE)
-    # for h, i in enumerate(board):
-    #     for k, j in enumerate(i):
-    #         pygame.draw.line(WIN, j, (h, k), (h, k))
-
-    pygame.display.update()
-
 
 def main():
     run = True
     mouse_btn_dwn = False
-    clock=pygame.time.Clock()
+    clock = pygame.time.Clock()
     WIN.fill(WHITE)
-
+    radius = 10
     while run:
         clock.tick(100)
         for event in pygame.event.get():
@@ -32,18 +21,15 @@ def main():
                 break
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_btn_dwn = True
+            if event.type == pygame.MOUSEBUTTONUP:
+                mouse_btn_dwn = False
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_DOWN]:
+            radius -= 3
+        if keys[pygame.K_UP]:
+            radius += 3
         if mouse_btn_dwn:
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]][mouse_pos[1]] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]+1][mouse_pos[1]] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]][mouse_pos[1]+1] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]-1][mouse_pos[1]] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]][mouse_pos[1]-1] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]+1][mouse_pos[1]+1] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]-1][mouse_pos[1]-1] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]+1][mouse_pos[1]-1] = (0, 0, 0)
-            # board[(mouse_pos := pygame.mouse.get_pos())[0]-1][mouse_pos[1]+1] = (0, 0, 0)
-            pygame.draw.circle(WIN,(0,0,0),pygame.mouse.get_pos(),60)
-        draw(WIN)
+            pygame.draw.circle(WIN, (0, 0, 0), pygame.mouse.get_pos(), radius)
 
 
 if __name__ == '__main__':
